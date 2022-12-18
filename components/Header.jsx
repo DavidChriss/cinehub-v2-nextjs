@@ -9,8 +9,10 @@ function Header() {
   return (
     <div className="px-8 py-8">
       <div className="flex justify-between">
+        <Link href={'/'}>
         <Image src={"/logo.png"} width={150} height={150} alt={'logo'}></Image>
-        <ul className="flex space-x-4 text-white">
+        </Link>
+        <ul className="flex space-x-4 text-white flex-wrap">
           <li className="bg-[#2E343E] px-4 py-2 rounded-md hover:bg-[#323744]">
             <Link className="hover:text-[#76D12A]" href={'/'}>
             Home
@@ -32,7 +34,7 @@ function Header() {
             <Link className="hover:text-[#76D12A]" href={'/'}>Top IMDb</Link>
           </li>
         </ul>
-        <ul className="flex space-x-4">
+        <ul className="flex space-x-4 flex-wrap">
           <li>
             <InputGroup>
               <InputLeftAddon children={<SearchIcon />} pointerEvents="none" />

@@ -13,7 +13,7 @@ const Player = (props) => {
 
   let subs = stream_data["result"]["subtitles"];
   let video_url_arr = stream_data["result"]["sources"];
-  const video_url = video_url_arr.filter((url) => url.quality == "auto");
+  const video_url = video_url_arr?.filter((url) => url.quality == "auto");
   return (
     <div>
       {video_url && (

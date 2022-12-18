@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import useSWR from "swr";
 import { useRouter } from "next/router";
-const Player = dynamic(() => import("../../components/Player"), {
+const Player = dynamic(() => import("../../../components/Player"), {
   ssr: false,
 });
 
@@ -10,18 +10,19 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export async function getServerSideProps(context) {
   let { playid } = context.params
-  let epid_split = playid.split('-')
-  let epid = epid_split[epid_split.length - 1]
-  const req = await fetch(`https://cinehub-v2-backend.vercel.app/api/watch?id=movie/${playid}&epid=${epid}`)
+  let { id } = context.query
+//   console.log(playid)
+//   let epid_split = playid.split('-')
+//   let epid = epid_split[epid_split.length - 1]
+  const req = await fetch(`https://cinehub-v2-backend.vercel.app/api/watch?id=tv/${playid}&epid=${id}`)
   const res = await req.json()
   return {
-    props: { stream_data: res, epid }, // will be passed to the page component as props
+    props: { stream_data: res }, // will be passed to the page component as props
   }
 }
 
-function PlayID(props) {
-  const { stream_data, epid } = props
-  console.log(epid)
+function PlayTVID(props) {
+  const { stream_data } = props
   // const router = useRouter();
   // const { playid } = router.query;
 
@@ -46,4 +47,4 @@ function PlayID(props) {
   );
 }
 
-export default PlayID;
+export default PlayTVID;
