@@ -6,13 +6,6 @@ function TVSearchCard(props) {
     return (
       <div key={index} className="pt-8 flex max-w-[200px]">
         <div className="bg-[#1f232c] pb-2 rounded-md">
-          {/* <img
-            className="hover:brightness-75"
-            src={data.tv_poster}
-            width={200}
-            height={233}
-            alt={data.tv_name}
-          ></img> */}
           <Image
             NativeImgProps={{ className: "hover:brightness-75" }}
             src={data.image}
@@ -25,8 +18,6 @@ function TVSearchCard(props) {
             <div className="flex justify-between pt-1">
               <p>
                 {data.type}
-                {/* <Icon className="mr-1" as={AiFillStar} />
-              {data.vote_average.toFixed(1)} */}
               </p>
             </div>
           </div>

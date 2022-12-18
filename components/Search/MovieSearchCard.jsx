@@ -6,13 +6,6 @@ function MovieSearchCard(props) {
     return (
       <div key={index} className="pt-8 flex max-w-[200px]">
         <div className="bg-[#1f232c] pb-2 rounded-md hover:border-1 hover:border-[#84cc16]">
-          {/* <img
-            className="hover:brightness-75"
-            src={data.movie_poster}
-            width={200}
-            height={233}
-            alt={data.movie_name}
-          ></img> */}
           <Image
             NativeImgProps={{ className: "hover:brightness-75" }}
             src={data.image}
