@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import { Input, InputGroup, InputLeftAddon } from "@chakra-ui/react";
+// import { Input, InputGroup, InputLeftAddon } from "@chakra-ui/react";
+import Search from "./Search";
 import { Icon, SearchIcon } from "@chakra-ui/icons";
 import { AiOutlineUser } from "react-icons/ai";
 import Link from "next/link";
@@ -36,10 +37,7 @@ function Header() {
         </ul>
         <ul className="flex space-x-4 flex-wrap">
           <li>
-            <InputGroup>
-              <InputLeftAddon children={<SearchIcon />} pointerEvents="none" />
-              <Input width={"32"} variant="outline" placeholder="Search" className="text-white" />
-            </InputGroup>
+            <Search />
           </li>
           <li className="pt-2">
             <a

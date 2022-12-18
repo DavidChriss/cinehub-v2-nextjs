@@ -6,8 +6,6 @@ const Player = dynamic(() => import("../../../components/Player"), {
   ssr: false,
 });
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
-
 export async function getServerSideProps(context) {
   let { playid } = context.params
   let epid_split = playid.split('-')
