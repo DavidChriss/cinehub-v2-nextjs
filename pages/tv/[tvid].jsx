@@ -1,18 +1,13 @@
 import React from "react";
-import dynamic from "next/dynamic";
 import useSWR from "swr";
 import { useRouter } from "next/router";
-import { Spinner } from "@chakra-ui/react";
 import { Icon } from "@chakra-ui/icons";
 import { AiFillStar } from "react-icons/ai";
 import { FaPlay } from "react-icons/fa";
-import { atom, useAtom, useAtomValue } from "jotai";
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 
 import Header from "../../components/Header";
 import Link from "next/link";
-const Player = dynamic(() => import("../../components/Player"), {
-  ssr: false,
-});
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -43,7 +38,7 @@ function tvid() {
 
   // console.log(seasonData);
 
-  let first_ep = info_data?.result.episodes[0].id
+  let first_ep = info_data?.result.episodes[0].id;
 
   return (
     <div className="min-h-screen bg-[#282C37]">
@@ -52,7 +47,7 @@ function tvid() {
         {info_data != null ? (
           <div className="py-4 flex">
             <img
-              className="rounded-md"
+              className="rounded-md hidden md:block"
               src={info_data.result.image}
               alt={info_data.result.name}
             />
@@ -63,13 +58,13 @@ function tvid() {
               <div className="flex space-x-2 pt-4">
                 <p className="text-[#939ba2] text-base">
                   <Icon as={AiFillStar} />
-                  {info_data.result.rating} |{" "}
+                  {info_data.result.rating} |
                 </p>
                 <p className="text-[#939ba2] text-base">
-                  {info_data.result.releaseDate} |{" "}
+                  {info_data.result.releaseDate} |
                 </p>
                 <p className="text-[#939ba2] text-base">
-                  {info_data.result.duration} |{" "}
+                  {info_data.result.duration} |
                 </p>
                 <p className="text-[#939ba2] text-base">
                   {info_data.result.genres.join(", ")}
@@ -80,7 +75,7 @@ function tvid() {
               </p>
               <div className="flex pt-4">
                 <p className="text-[#939ba2] text-base font-bold pr-2">
-                  Starring:{" "}
+                  Starring:
                 </p>
                 <p className="text-[#939ba2] text-base">
                   {info_data.result.casts.join(", ")}
@@ -88,16 +83,14 @@ function tvid() {
               </div>
               <div className="flex pt-4">
                 <p className="text-[#939ba2] text-base font-bold pr-2">
-                  Country:{" "}
+                  Country:
                 </p>
                 <p className="text-[#939ba2] text-base">
                   {info_data.result.country}
                 </p>
               </div>
               <div className="flex pt-4">
-                <p className="text-[#939ba2] text-base font-bold pr-2">
-                  Tags:{" "}
-                </p>
+                <p className="text-[#939ba2] text-base font-bold pr-2">Tags:</p>
                 <p className="text-[#939ba2] text-base">
                   {info_data.result.tags.join(" ")}
                 </p>
@@ -113,21 +106,44 @@ function tvid() {
         ) : null}
       </div>
       <div className="px-8">
-        <div className="text-[#939ba2] text-2xl font-bold">Episodes</div>
-        <div className="flex gap-2 flex-wrap">
-          {info_data?.result.episodes.map((item) => {
-            return (
-              <div>
-                <Link href={`/play/tv/${tvid}?id=${item.id}`}>
-                  <h1 className="p-4 bg-[#181B22] inline-block mt-6 rounded-md font-bold text-white hover:bg-lime-500 hover:text-black">
-                    <Icon className="mr-3" as={FaPlay} />
-                    {item.season} x {item.number}
-                  </h1>
-                </Link>
-              </div>
-            );
-          })}
-        </div>
+        <Tabs size={"lg"} variant={'unstyled'}>
+          <TabList className="text-white font-bold inline-block">
+            {seasonData.map((item, index) => {
+              return (
+                <Tab
+                  _selected={{
+                    color: "black",
+                    bg: "#84cc16",
+                  }}
+                >
+                  {index + 1}
+                </Tab>
+              );
+            })}
+          </TabList>
+          <TabPanels>
+            {unique.map((elem, index) => {
+              return (
+                <TabPanel>
+                  <div className="flex gap-2 flex-wrap">
+                    {seasonData[index].map((item, index) => {
+                      return (
+                        <div>
+                          <Link href={`/play/tv/${tvid}?id=${item.id}`}>
+                            <h1 className="p-4 bg-[#181B22] inline-block mt-6 rounded-md font-bold text-white hover:bg-lime-500 hover:text-black">
+                              <Icon className="mr-3" as={FaPlay} />
+                              {item.season} x {item.number}
+                            </h1>
+                          </Link>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </TabPanel>
+              );
+            })}
+          </TabPanels>
+        </Tabs>
       </div>
     </div>
   );

@@ -1,18 +1,12 @@
 import React from "react";
-import dynamic from "next/dynamic";
 import useSWR from "swr";
 import { useRouter } from "next/router";
-import { Spinner } from "@chakra-ui/react";
 import { Icon } from "@chakra-ui/icons";
 import { AiFillStar } from "react-icons/ai";
 import { FaPlay } from "react-icons/fa"
-import { atom, useAtom, useAtomValue } from "jotai";
 
 import Header from "../../components/Header";
 import Link from "next/link";
-const Player = dynamic(() => import("../../components/Player"), {
-  ssr: false,
-});
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -83,7 +77,7 @@ function movieid() {
                   {info_data.result.tags.join(" ")}
                 </p>
               </div>
-              <Link href={`/play/${movieid}`}>
+              <Link href={`/play/movie/${movieid}`}>
               <h1 className="px-8 py-4 bg-[#181B22] inline-block mt-6 rounded-md font-bold text-white hover:bg-lime-500 hover:text-black"><Icon className="mr-3" as={FaPlay}/>Play</h1>
             </Link>
             </div>
