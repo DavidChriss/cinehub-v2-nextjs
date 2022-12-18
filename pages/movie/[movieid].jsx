@@ -23,11 +23,12 @@ function movieid() {
   return (
     <div className="min-h-screen bg-[#282C37]">
       <Header />
+      <div className="md:px-40 py-8 bg-[#181B22] min-h-screen">
       <div className="px-8 aspect-auto">
         {info_data != null ? (
           <div className="py-4 flex">
             <img
-              className="rounded-md"
+              className="rounded-md hidden object-cover md:block"
               src={info_data.result.image}
               alt={info_data.result.name}
             />
@@ -69,21 +70,22 @@ function movieid() {
                   {info_data.result.country}
                 </p>
               </div>
-              <div className="flex pt-4">
+              {/* <div className="flex pt-4">
                 <p className="text-[#939ba2] text-base font-bold pr-2">
                   Tags:{" "}
                 </p>
                 <p className="text-[#939ba2] text-base">
                   {info_data.result.tags.join(" ")}
                 </p>
-              </div>
+              </div> */}
               <Link href={`/play/movie/${movieid}`}>
-              <h1 className="px-8 py-4 bg-[#181B22] inline-block mt-6 rounded-md font-bold text-white hover:bg-lime-500 hover:text-black"><Icon className="mr-3" as={FaPlay}/>Play</h1>
+              <h1 className="px-8 py-4 bg-[#282C37] inline-block mt-6 rounded-md font-bold text-white hover:bg-lime-500 hover:text-black"><Icon className="mr-3" as={FaPlay}/>Play</h1>
             </Link>
             </div>
           </div>
         ) : null}
       </div>
+    </div>
     </div>
   );
 }

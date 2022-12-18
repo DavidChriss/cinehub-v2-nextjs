@@ -23,10 +23,10 @@ function Trending() {
           View all
         </a>
       </div>
-      <div className="flex flex-wrap gap-8 px-6">
+      <div className="flex flex-wrap gap-5 px-6">
         {data && data ? (
           data.result
-            .filter((item, idx) => idx < 10)
+          .filter((item, idx) => idx < 20)
             .map((data, index) => {
               return (
                 <Link href={`/${data.movie_id}`}>

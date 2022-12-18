@@ -43,6 +43,7 @@ function tvid() {
   return (
     <div className="min-h-screen bg-[#282C37]">
       <Header />
+      <div className="md:px-40 py-8 bg-[#181B22] min-h-screen">
       <div className="px-8 aspect-auto">
         {info_data != null ? (
           <div className="py-4 flex">
@@ -89,14 +90,14 @@ function tvid() {
                   {info_data.result.country}
                 </p>
               </div>
-              <div className="flex pt-4">
+              {/* <div className="flex pt-4">
                 <p className="text-[#939ba2] text-base font-bold pr-2">Tags:</p>
                 <p className="text-[#939ba2] text-base">
                   {info_data.result.tags.join(" ")}
                 </p>
-              </div>
+              </div> */}
               <Link href={`/play/tv/${tvid}?id=${first_ep}`}>
-                <h1 className="px-8 py-4 bg-[#181B22] inline-block mt-6 rounded-md font-bold text-white hover:bg-lime-500 hover:text-black">
+                <h1 className="px-8 py-4 bg-[#282C37] inline-block mt-6 rounded-md font-bold text-white hover:bg-lime-500 hover:text-black">
                   <Icon className="mr-3" as={FaPlay} />
                   Play
                 </h1>
@@ -106,7 +107,7 @@ function tvid() {
         ) : null}
       </div>
       <div className="px-8">
-        <Tabs size={"lg"} variant={'unstyled'}>
+        <Tabs size={"lg"} variant={'unstyled'} align={'center'}>
           <TabList className="text-white font-bold inline-block">
             {seasonData.map((item, index) => {
               return (
@@ -130,7 +131,7 @@ function tvid() {
                       return (
                         <div>
                           <Link href={`/play/tv/${tvid}?id=${item.id}`}>
-                            <h1 className="p-4 bg-[#181B22] inline-block mt-6 rounded-md font-bold text-white hover:bg-lime-500 hover:text-black">
+                            <h1 className="p-4 bg-[#282C37] inline-block mt-6 rounded-md font-bold text-white hover:bg-lime-500 hover:text-black">
                               <Icon className="mr-3" as={FaPlay} />
                               {item.season} x {item.number}
                             </h1>
@@ -145,6 +146,7 @@ function tvid() {
           </TabPanels>
         </Tabs>
       </div>
+    </div>
     </div>
   );
 }

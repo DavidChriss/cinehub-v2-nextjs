@@ -25,13 +25,13 @@ function Header() {
             <Link className="hover:text-[#76D12A]" href={'/'}>Country</Link>
           </li>
           <li className="bg-[#2E343E] px-4 py-2 rounded-md hover:bg-[#323744]">
-            <Link className="hover:text-[#76D12A]" href={'/'}>Movies</Link>
+            <Link className="hover:text-[#76D12A]" href={'/movie'}>Movies</Link>
           </li>
           <li className="bg-[#2E343E] px-4 py-2 rounded-md hover:bg-[#323744]">
-            <Link className="hover:text-[#76D12A]" href={'/'}>TV</Link>
+            <Link className="hover:text-[#76D12A]" href={'/tv'}>TV</Link>
           </li>
           <li className="bg-[#2E343E] px-4 py-2 rounded-md hover:bg-[#323744]">
-            <Link className="hover:text-[#76D12A]" href={'/'}>Top IMDb</Link>
+            <Link className="hover:text-[#76D12A]" href={'/top-imdb'}>Top IMDb</Link>
           </li>
         </ul>
         <ul className="flex space-x-4 flex-wrap">
