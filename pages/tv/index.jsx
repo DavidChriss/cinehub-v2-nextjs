@@ -27,7 +27,7 @@ function TV() {
       </div> */}
         <div className="flex flex-wrap gap-8 px-6">
           {data && data
-            ? data.result.map((data, index) => {
+            ? data.result.filter((item, idx) => idx < 30).map((data, index) => {
                 return (
                   <Link href={`/${data.tv_id}`}>
                     <TVCards data={data} index={data.tv_id} />

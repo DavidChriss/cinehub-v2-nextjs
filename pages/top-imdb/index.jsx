@@ -47,7 +47,7 @@ function TopIMDB() {
             <TabPanel>
               <div className="flex flex-wrap gap-8">
                 {movieTop && movieTop
-                  ? movieTop.result.map((data, index) => {
+                  ? movieTop.result.filter((item, idx) => idx < 30).map((data, index) => {
                       return (
                         <Link href={`/${data.movie_id}`}>
                           <MovieCards data={data} index={data.movie_id} />
@@ -60,7 +60,7 @@ function TopIMDB() {
             <TabPanel>
               <div className="flex flex-wrap gap-8">
                 {TvTop && TvTop
-                  ? TvTop.result.map((data, index) => {
+                  ? TvTop.result.filter((item, idx) => idx < 30).map((data, index) => {
                       return (
                         <Link href={`/${data.tv_id}`}>
                           <TVCards data={data} index={data.tv_id} />
