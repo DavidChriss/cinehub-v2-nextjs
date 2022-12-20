@@ -1,6 +1,4 @@
 import React from "react";
-import useSWR from "swr";
-import { useRouter } from "next/router";
 import { Icon } from "@chakra-ui/icons";
 import { AiFillStar } from "react-icons/ai";
 import { FaPlay } from "react-icons/fa";
@@ -9,77 +7,74 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import Header from "../../components/Header";
 import Link from "next/link";
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+export async function getServerSideProps(context) {
+  let { tvid } = context.params
+  const req = await fetch(`https://cinehub-v2-backend.vercel.app/api/info?id=tv/${tvid}`)
+  const res = await req.json()
+  return {
+    props: { data: res, tvid }, // will be passed to the page component as props
+  }
+}
 
-function tvid() {
-  const router = useRouter();
-  const { tvid } = router.query;
-  const { data: info_data } = useSWR(
-    tvid
-      ? `https://cinehub-v2-backend.vercel.app/api/info?id=tv/${tvid}`
-      : null,
-    fetcher
-  );
+function tvidPage({ data, tvid }) {
 
   let seasonData = [];
 
   const unique = [
-    ...new Set(info_data?.result.episodes.map((item) => item.season)),
+    ...new Set(data?.result.episodes.map((item) => item.season)),
   ];
   const seasonArr = unique.map((element) => {
-    const filteredSeason = info_data?.result.episodes.filter(
+    const filteredSeason = data?.result.episodes.filter(
       (item) => item["season"] == element
     );
     seasonData.push(filteredSeason);
   });
-  //   const seasons = info_data?.result.episodes.filter((item) =>
-  //     item['season']
-  // )
 
-  // console.log(seasonData);
-
-  let first_ep = info_data?.result.episodes[0].id;
+  let first_ep = data?.result.episodes[0].id;
 
   return (
     <div className="min-h-screen bg-[#282C37]">
       <Header />
       <div className="md:px-40 py-8 bg-[#181B22] min-h-screen">
       <div className="px-8 aspect-auto">
-        {info_data != null ? (
+        {data != null ? (
           <div className="py-4 flex">
-            <img
+            {/* <img
               className="rounded-md hidden md:block"
-              src={info_data.result.image}
-              alt={info_data.result.name}
-            />
+              src={data.result.image}
+              alt={data.result.name}
+            /> */}
             <div className="flex flex-col pl-6 flex-wrap">
-              <p className="text-[#939ba2] text-5xl font-bold">
-                {info_data.result.title}
-              </p>
-              <div className="flex space-x-2 pt-4">
-                <p className="text-[#939ba2] text-base">
+              <span className="text-[#939ba2] text-5xl font-bold">
+                {data.result.title}
+              </span>
+              <div className="flex pt-4 flex-wrap text-[#939ba2]">
+                <span className="text-[#939ba2] text-base">
                   <Icon as={AiFillStar} />
-                  {info_data.result.rating} |
-                </p>
-                <p className="text-[#939ba2] text-base">
-                  {info_data.result.releaseDate} |
-                </p>
-                <p className="text-[#939ba2] text-base">
-                  {info_data.result.duration} |
-                </p>
-                <p className="text-[#939ba2] text-base">
-                  {info_data.result.genres.join(", ")}
-                </p>
+                </span>
+                <span className="mx-1">{data.result.rating}</span>
+                <span className="mx-2">|</span>
+                <span className="text-[#939ba2] text-base">
+                  {data.result.releaseDate}
+                </span>
+                <span className="mx-2">|</span>
+                <span className="text-[#939ba2] text-base">
+                  {data.result.duration}
+                </span>
+                <span className="mx-2">|</span>
+                <span className="text-[#939ba2] text-base">
+                  {data.result.genres.join(", ")}
+                </span>
               </div>
               <p className="text-[#939ba2] text-base pt-4">
-                {info_data.result.description.trim()}
+                {data.result.description.trim()}
               </p>
               <div className="flex pt-4">
                 <p className="text-[#939ba2] text-base font-bold pr-2">
                   Starring:
                 </p>
                 <p className="text-[#939ba2] text-base">
-                  {info_data.result.casts.join(", ")}
+                  {data.result.casts.join(", ")}
                 </p>
               </div>
               <div className="flex pt-4">
@@ -87,15 +82,9 @@ function tvid() {
                   Country:
                 </p>
                 <p className="text-[#939ba2] text-base">
-                  {info_data.result.country}
+                  {data.result.country}
                 </p>
               </div>
-              {/* <div className="flex pt-4">
-                <p className="text-[#939ba2] text-base font-bold pr-2">Tags:</p>
-                <p className="text-[#939ba2] text-base">
-                  {info_data.result.tags.join(" ")}
-                </p>
-              </div> */}
               <Link href={`/play/tv/${tvid}?id=${first_ep}`}>
                 <h1 className="px-8 py-4 bg-[#282C37] inline-block mt-6 rounded-md font-bold text-white hover:bg-lime-500 hover:text-black">
                   <Icon className="mr-3" as={FaPlay} />
@@ -151,4 +140,4 @@ function tvid() {
   );
 }
 
-export default tvid;
+export default tvidPage;

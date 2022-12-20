@@ -8,11 +8,10 @@ import {
   Poster,
 } from "@vime/react";
 
-const Player = (props) => {
-  let { stream_data } = props
+const Player = ({ data }) => {
 
-  let subs = stream_data["result"]["subtitles"];
-  let video_url_arr = stream_data["result"]["sources"];
+  let subs = data["result"]["subtitles"];
+  let video_url_arr = data["result"]["sources"];
   const video_url = video_url_arr?.filter((url) => url.quality == "auto");
   return (
     <div>

@@ -1,25 +1,22 @@
 import Link from "next/link";
 import React from "react";
-import useSWR from "swr";
 import Header from "../../components/Header";
 import MovieCards from "../../components/MovieCards";
 import TVCards from "../../components/TVCards";
 
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 
-function TopIMDB() {
-  const fetcher = (...args) => fetch(...args).then((res) => res.json());
-  const { data: movieTop } = useSWR(
-    "https://cinehub-v2-backend.vercel.app/api/movies/top-imdb?page=",
-    fetcher
-  );
-  const { data: TvTop } = useSWR(
-    "https://cinehub-v2-backend.vercel.app/api/tv/top-imdb?page=",
-    fetcher
-  );
-  //   if (data) {
-  //     console.log(data);
-  //   }
+export async function getServerSideProps(context) {
+  const [movieTop, tvTop] = await Promise.all([
+    (await fetch('https://cinehub-v2-backend.vercel.app/api/movies/top-imdb?page=')).json(),
+    (await fetch('https://cinehub-v2-backend.vercel.app/api/tv/top-imdb?page=')).json()
+  ])
+  return {
+    props: { movieTopData: movieTop, tvTopData: tvTop }, // will be passed to the page component as props
+  }
+}
+
+function TopIMDB({ movieTopData, tvTopData }) {
   return (
     <div className="min-h-screen bg-[#282C37]">
       <Header />
@@ -46,8 +43,8 @@ function TopIMDB() {
           <TabPanels>
             <TabPanel>
               <div className="flex flex-wrap gap-8">
-                {movieTop && movieTop
-                  ? movieTop.result.filter((item, idx) => idx < 30).map((data, index) => {
+                {movieTopData && movieTopData
+                  ? movieTopData.result.filter((item, idx) => idx < 30).map((data, index) => {
                       return (
                         <Link href={`/${data.movie_id}`}>
                           <MovieCards data={data} index={data.movie_id} />
@@ -59,8 +56,8 @@ function TopIMDB() {
             </TabPanel>
             <TabPanel>
               <div className="flex flex-wrap gap-8">
-                {TvTop && TvTop
-                  ? TvTop.result.filter((item, idx) => idx < 30).map((data, index) => {
+                {tvTopData && tvTopData
+                  ? tvTopData.result.filter((item, idx) => idx < 30).map((data, index) => {
                       return (
                         <Link href={`/${data.tv_id}`}>
                           <TVCards data={data} index={data.tv_id} />
